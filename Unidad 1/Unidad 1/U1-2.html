@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Unidad 1 - Punto 2</title>
+</head>
+
+<body>
+    <script>
+        let authUser = "admin";
+        let authPass = "1234";
+        let intentos = 0;
+        let maxIntentos = 3;
+        let logueado = false;
+
+        while (intentos < maxIntentos && !logueado) {
+            let user = prompt("Usuario:");
+            let pass = prompt("Contrasena:");
+
+            if (user === authUser && pass === authPass) {
+                alert("Bienvenido/a " + user);
+                logueado = true;
+            } else {
+                intentos++;
+                if (intentos === maxIntentos) {
+                    alert("Usuario bloqueado. Contacte al administrador");
+                } else {
+                    alert("Usuario y/o contrasena incorrecta");
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

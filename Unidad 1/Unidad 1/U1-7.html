@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Unidad 1 - Punto 7</title>
+</head>
+
+<body>
+    <script>
+        let productos = new Map();
+        productos.set("A001", {
+            descripcion: "Lavandina",
+            precio: 250,
+            stock: 100
+        });
+        productos.set("A002", {
+            descripcion: "Detergente",
+            precio: 300,
+            stock: 50
+        });
+
+        let codigo = prompt("Codigo de producto:");
+        if (productos.has(codigo)) {
+            let producto = productos.get(codigo);
+            alert("Stock disponible: " + producto.stock);
+            let cantidad = parseInt(prompt("Cantidad a comprar:"));
+            if (cantidad > 0 && cantidad <= producto.stock) {
+                producto.stock -= cantidad;
+                alert("Compra realizada. Stock restante: " + producto.stock);
+            } else {
+                alert("Cantidad invalida o insuficiente");
+            }
+        } else {
+            alert("Producto no encontrado");
+        }
+    </script>
+</body>
+
+</html>

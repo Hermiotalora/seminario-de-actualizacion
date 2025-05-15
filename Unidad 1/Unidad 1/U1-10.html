@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Unidad 1 - Punto 10</title>
+</head>
+
+<body>
+    <script>
+        let usuarios = new Map();
+        usuarios.set("admin", {
+            pass: "admin123",
+            rol: "administrador"
+        });
+        usuarios.set("cliente1", {
+            pass: "cliente123",
+            rol: "cliente"
+        });
+
+        let user = prompt("Usuario:");
+        let pass = prompt("Contrasena:");
+
+        if (usuarios.has(user) && usuarios.get(user).pass === pass) {
+            let rol = usuarios.get(user).rol;
+            if (rol === "administrador") {
+                let nuevo = prompt("Nuevo usuario:");
+                let nuevaPass = prompt("Contrasena:");
+                let nuevoRol = prompt("Rol:");
+                usuarios.set(nuevo, {
+                    pass: nuevaPass,
+                    rol: nuevoRol
+                });
+                alert("Usuario creado");
+            } else {
+                alert("Solo administradores pueden crear cuentas");
+            }
+        } else {
+            alert("Credenciales invalidas");
+        }
+    </script>
+</body>
+
+</html>

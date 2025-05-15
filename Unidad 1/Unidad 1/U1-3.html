@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Unidad 1 - Punto 3</title>
+</head>
+
+<body>
+    <script>
+        function validarPassword(pass) {
+            let especiales = pass.match(/[^a-zA-Z0-9]/g);
+            return (
+                pass.length >= 8 &&
+                pass.length <= 16 &&
+                /[A-Z]/.test(pass) &&
+                especiales && especiales.length >= 2
+            );
+        }
+
+        let pass = prompt("Ingrese una contrasena segura:");
+        if (validarPassword(pass)) {
+            alert("Contrasena valida");
+        } else {
+            alert("Contrasena invalida");
+        }
+    </script>
+</body>
+
+</html>

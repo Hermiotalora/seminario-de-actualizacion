@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Unidad 1 - Punto 6</title>
+</head>
+
+<body>
+    <script>
+        let productos = new Map();
+        productos.set("A001", {
+            descripcion: "Lavandina",
+            precio: 250,
+            stock: 100
+        });
+        productos.set("A002", {
+            descripcion: "Detergente",
+            precio: 300,
+            stock: 50
+        });
+
+        let opcion;
+        do {
+            opcion = prompt("1 - Listar\\n2 - Nuevo\\n3 - Editar\\n4 - Eliminar\\nX - Salir");
+
+            if (opcion === "1") {
+                let lista = "";
+                for (let [codigo, p] of productos) {
+                    lista += codigo + ": " + p.descripcion + ", $" + p.precio + ", Stock: " + p.stock + "\\n";
+                }
+                alert(lista);
+            } else if (opcion === "2") {
+                let codigo = prompt("Codigo:");
+                if (productos.has(codigo)) {
+                    alert("Ya existe");
+                } else {
+                    let descripcion = prompt("Descripcion:");
+                    let precio = parseFloat(prompt("Precio:"));
+                    let stock = parseInt(prompt("Stock:"));
+                    productos.set(codigo, {
+                        descripcion,
+                        precio,
+                        stock
+                    });
+                    alert("Articulo agregado");
+                }
+            } else if (opcion === "3") {
+                let codigo = prompt("Codigo:");
+                if (!productos.has(codigo)) {
+                    alert("No encontrado");
+                } else {
+                    let p = productos.get(codigo);
+                    p.descripcion = prompt("Descripcion:", p.descripcion);
+                    p.precio = parseFloat(prompt("Precio:", p.precio));
+                    p.stock = parseInt(prompt("Stock:", p.stock));
+                    productos.set(codigo, p);
+                    alert("Articulo actualizado");
+                }
+            } else if (opcion === "4") {
+                let codigo = prompt("Codigo:");
+                if (productos.delete(codigo)) {
+                    alert("Articulo eliminado");
+                } else {
+                    alert("No encontrado");
+                }
+            }
+        } while (opcion !== "X" && opcion !== "x");
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Unidad 1 - Punto 5</title>
+</head>
+
+<body>
+    <script>
+        let productos = new Map();
+        productos.set("A001", {
+            descripcion: "Lavandina",
+            precio: 250,
+            stock: 100
+        });
+        productos.set("A002", {
+            descripcion: "Detergente",
+            precio: 300,
+            stock: 50
+        });
+
+        let lista = "Articulos:\\n";
+        for (let [codigo, prod] of productos.entries()) {
+            lista += codigo + " - " + prod.descripcion + " ($" + prod.precio + ") - Stock: " + prod.stock + "\\n";
+        }
+        alert(lista);
+    </script>
+</body>
+
+</html>

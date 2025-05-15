@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Unidad 1 - Punto 4</title>
+</head>
+
+<body>
+    <script>
+        function validarPassword(pass) {
+            let especiales = pass.match(/[^a-zA-Z0-9]/g);
+            return (
+                pass.length >= 8 &&
+                pass.length <= 16 &&
+                /[A-Z]/.test(pass) &&
+                especiales && especiales.length >= 2
+            );
+        }
+
+        let usuarios = new Map();
+        let opcion;
+
+        do {
+            opcion = prompt("1 - Iniciar sesion\\n2 - Crear cuenta\\nX - Salir");
+
+            if (opcion === "1") {
+                let u = prompt("Usuario:");
+                let p = prompt("Contrasena:");
+                if (usuarios.has(u) && usuarios.get(u) === p) {
+                    alert("Bienvenido/a " + u);
+                } else {
+                    alert("Usuario y/o contrasena incorrecta");
+                }
+            } else if (opcion === "2") {
+                let u = prompt("Nuevo usuario:");
+                let p = prompt("Nueva contrasena:");
+                if (validarPassword(p)) {
+                    usuarios.set(u, p);
+                    alert("Cuenta creada");
+                } else {
+                    alert("Contrasena insegura");
+                }
+            }
+        } while (opcion !== "X" && opcion !== "x");
+    </script>
+</body>
+
+</html>
