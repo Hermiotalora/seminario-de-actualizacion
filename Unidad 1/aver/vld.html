@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Unidad 1 - Punto 10</title>
+</head>
+
+<body>
+    <script>
+        let usuarios = new Map([
+            ["admin", { pass: "admin123", rol: "administrador" }],
+            ["cliente1", { pass: "cliente123", rol: "cliente" }],
+            ["vendedor1", { pass: "vende123", rol: "vendedor" }],
+            ["deposito1", { pass: "deposito123", rol: "deposito" }]
+        ]);
+
+        let permisos = {
+            administrador: ["crear", "listar", "editar", "eliminar", "comprar"],
+            cliente: ["listar", "comprar"],
+            vendedor: ["listar", "comprar"],
+            deposito: ["listar"]
+        };
+
+        let productos = new Map([
+            ["001", { descripcion: "Lavandina", precio: 250, stock: 100 }],
+            ["002", { descripcion: "Detergente", precio: 300, stock: 50 }]
+        ]);
+
+        let user = prompt("Usuario:");
+        let pass = prompt("Contrasena:");
+
+        if (!usuarios.has(user) || usuarios.get(user).pass !== pass) {
+            alert("Credenciales invalidas");
+        } else {
+            let rol = usuarios.get(user).rol;
+            alert("Bienvenido/a " + user + "\nRol: " + rol);
+
+            let opcion;
+            do {
+                opcion = prompt("Seleccione una accion:\n" +
+                    (permisos[rol].includes("listar") ? "1 - Listar productos\n" : "") +
+                    (permisos[rol].includes("crear") ? "2 - Crear producto\n" : "") +
+                    (permisos[rol].includes("editar") ? "3 - Editar producto\n" : "") +
+                    (permisos[rol].includes("eliminar") ? "4 - Eliminar producto\n" : "") +
+                    (permisos[rol].includes("comprar") ? "5 - Comprar producto\n" : "") +
+                    "X - Salir").toUpperCase();
+
+                switch (opcion) {
+                    case "1":
+                        if (permisos[rol].includes("listar")) {
+                            let lista = "Listado de productos:\n";
+                            for (let [codigo, p] of productos) {
+                                lista += `${codigo}: ${p.descripcion} - $${p.precio} - Stock: ${p.stock}\n`;
+                            }
+                            alert(lista);
+                        }
+                        break;
+
+                    case "2":
+                        if (permisos[rol].includes("crear")) {
+                            let codigo = prompt("Nuevo código:");
+                            if (productos.has(codigo)) {
+                                alert("El producto ya existe.");
+                            } else {
+                                let descripcion = prompt("Descripción:");
+                                let precio = parseFloat(prompt("Precio:"));
+                                let stock = parseInt(prompt("Stock:"));
+                                productos.set(codigo, { descripcion, precio, stock });
+                                alert("Producto creado.");
+                            }
+                        }
+                        break;
+
+                    case "3":
+                        if (permisos[rol].includes("editar")) {
+                            let codigo = prompt("Codigo del producto a editar:");
+                            if (!productos.has(codigo)) {
+                                alert("Producto no encontrado.");
+                            } else {
+                                let p = productos.get(codigo);
+                                p.descripcion = prompt("Descripcion:", p.descripcion);
+                                p.precio = parseFloat(prompt("Precio:", p.precio));
+                                p.stock = parseInt(prompt("Stock:", p.stock));
+                                productos.set(codigo, p);
+                                alert("Producto actualizado.");
+                            }
+                        }
+                        break;
+
+                    case "4":
+                        if (permisos[rol].includes("eliminar")) {
+                            let codigo = prompt("Codigo a eliminar:");
+                            if (productos.delete(codigo)) {
+                                alert("Producto eliminado.");
+                            } else {
+                                alert("Producto no encontrado.");
+                            }
+                        }
+                        break;
+
+                    case "5":
+                        if (permisos[rol].includes("comprar")) {
+                            let codigo = prompt("Codigo del producto:");
+                            if (!productos.has(codigo)) {
+                                alert("Producto no encontrado.");
+                            } else {
+                                let p = productos.get(codigo);
+                                alert(`Producto: ${p.descripcion} - Stock disponible: ${p.stock}`);
+                                let cantidad = parseInt(prompt("Cantidad a comprar:"));
+                                if (cantidad > 0 && cantidad <= p.stock) {
+                                    p.stock -= cantidad;
+                                    productos.set(codigo, p);
+                                    alert("Compra realizada. Stock restante: " + p.stock);
+                                } else {
+                                    alert("Cantidad inválida o insuficiente.");
+                                }
+                            }
+                        }
+                        break;
+
+                    case "X":
+                        alert("Sesion finalizada.");
+                        break;
+
+                    default:
+                        alert("Opcion invalida.");
+                        break;
+                }
+            } while (opcion !== "X");
+        }
+    </script>
+</body>
+
+</html>
